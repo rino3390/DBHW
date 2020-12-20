@@ -1,0 +1,37 @@
+body{
+    background-image:url(picture/shark1.jpg);
+    height: 100vh;
+    background-size: 563px,558px;
+    background-position:right bottom;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin:0 auto;
+}
+h3{
+    background-color: yellow;
+}
+ul{/*work列表*/
+    font-family:"華康竹風體W4", Microsoft JhengHei;
+    font-size:30px;
+    color:black;
+    position:static;
+    text-align: left;
+    margin-top: 50px;
+    margin-left: 150px;
+    width:125px;
+    height: auto;
+    /*list-style-type:circle;*/
+    list-style-image:url(picture/nigiri.jpg);
+}
+.drop-menu{/*work列表*/
+    font-family:"華康竹風體W4", Microsoft JhengHei;
+    font-size:20px;
+    color:black;
+    position:sticky;
+    text-align: left;
+    margin-top: 25px;
+    margin-right: 150px;
+    width:150px;
+    height: auto;
+    display:block;
+}

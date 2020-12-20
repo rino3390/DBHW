@@ -7,30 +7,39 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<title>SHAAAARK 生鮮食品公司</title>
+
+	<link rel="stylesheet" type="text/css" href="./CSS/home.css" charset="utf-8"/>
 </head>
 
 <body>
+	<h3>SHAAAARK 生鮮食品公司</h3>
+	<!--<style>  
+		p{
+			background-color: lightblue;  
+		}
+	</style>-->
 	<nav class="menu">
 		<ul>
 			<li><a href="index.php?dest=CLIENT&page=info">客戶資料</a></li>
-			<div class="dropdown-menu">
+			<div class="drop-menu"><!--客戶資料-->
 				<a class="dropdown-item" href="index.php?dest=CLIENT&page=info">查詢</a>
 				<a class="dropdown-item" href="index.php?dest=CLIENT&page=add">新增</a>
 				<a class="dropdown-item" href="index.php?dest=CLIENT&page=statistics">統計</a>
 			</div>
 			<li><a href="data/order_data/info">訂貨資料</a></li>
-			<div class="dropdown-menu">
+			<div class="drop-menu"><!--訂貨資料-->
 				<a class="dropdown-item" href="index.php?dest=ORDER&page=info">查詢</a>
 				<a class="dropdown-item" href="index.php?dest=ORDER&page=add">新增</a>
 				<a class="dropdown-item" href="index.php?dest=ORDER&page=statistics">統計</a>
 			</div>
 			<li><a href="index.php?dest=PURCHASE&page=info">進貨資料</a></li>
-			<div class="dropdown-menu">
-				<a class="dropdown-item" href="index.php?dest=PURCHASE&page=info">查詢</a>
-				<a class="dropdown-item" href="index.php?dest=PURCHASE&page=add">新增</a>
-				<a class="dropdown-item" href="index.php?dest=PURCHASE&page=statistics">統計</a>
+			<div class="drop-menu"><!--訂貨資料-->
+				<a class="dropdown-item" href="index.php?dest=ORDER&page=info">查詢</a>
+				<a class="dropdown-item" href="index.php?dest=ORDER&page=add">新增</a>
+				<a class="dropdown-item" href="index.php?dest=ORDER&page=statistics">統計</a>
 			</div>
 			<li><a href="index.php?dest=ACCOUNT&page=info">應收帳款</a></li>
 			<li><a href="index.php?dest=data&page=statistics">整合統計</a></li>
 		</ul>
 	</nav>
+</body>
