@@ -1,0 +1,18 @@
+body{
+    background-image:url(picture/shark1.jpg); /*背景圖*/
+    height: 100vh;
+    background-size: 563px,558px;
+    background-position:right bottom;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin:0 auto;
+}
+.dropdown{/*導覽列*/
+    font-family:"ink free", Microsoft JhengHei;
+    font: size 30px;
+    color:black;
+    list-style: none;
+}
+h1{
+    color: black;
+}
