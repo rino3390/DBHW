@@ -9,10 +9,21 @@ body{
 }
 .dropdown{/*導覽列*/
     font-family:"ink free", Microsoft JhengHei;
-    font: size 30px;
-    color:black;
+    font-size: 25px;
+    color:white;
+    list-style: none;
+    padding-top: 20px;
+}
+form{
+    padding-top:22px;
+}
+nav{
+    font-family:"ink free", Microsoft JhengHei;
+    font-size: 18px;
+    padding-top: 0%;
     list-style: none;
 }
-h1{
-    color: black;
+h2{
+    font-family:"DFKai-sb", Microsoft JhengHei;
+    background-color:rgb(211, 211, 211);
 }
