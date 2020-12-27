@@ -1,11 +1,22 @@
 body{
-    padding-top: 150px;
+    padding-top: 160px;
 }
 .main-content{/*主要內容*/
-    min-height: 100%;/*固定高度*/
     /*預留header、footer*/
-    padding-top:50px;
-    padding-bottom:20px;
-    margin-left: 50px;
+    margin-left: 20px;
     font-size: 18px;
+    min-height: 100%;
+    width: 80%;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.096);
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    margin-bottom: 50px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
 }
