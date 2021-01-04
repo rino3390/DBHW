@@ -2,6 +2,9 @@
     header("Location: index.php?failed=2");
 } ?>
 
+<!--匯出-->
+<?php if (isset($_POST['printTable'])) include("data/client_data/print.php") ?>
+
 <div class="main-content">
     <div class="row" style="height:3vh;"></div>
     <div class="row" style="height:10vh;">
@@ -70,7 +73,9 @@
                                         echo "<td>" . $row[$a] . "</td>";
                                     echo "<td>" . date("Y/m/d", strtotime($row[6])) . "</td>";
                                     echo "<td class='text-center'>";
-                                    echo "<img src='";if ($row[7] != null) echo "data:image/png;base64, " . base64_encode($row[7]);echo "'alt='error' class='img-thumbnail' style='max-height:10vh;max-width:10vw'/>";
+                                    echo "<img src='";
+                                    if ($row[7] != null) echo "data:image/png;base64, " . base64_encode($row[7]);
+                                    echo "'alt='error' class='img-thumbnail' style='max-height:10vh;max-width:10vw'/>";
                                     echo "</td>";
                                     echo "<td>" . $row[8] . "</td>";
                                     echo "<td class='text-center'>";
@@ -94,7 +99,7 @@
                                     echo '						</div>';
                                     echo "						<div class='col'>";
                                     echo "							<img src='";
-                                                                            if ($row[7] != null) echo "data:image/png;base64, " . base64_encode($row[7]);
+                                    if ($row[7] != null) echo "data:image/png;base64, " . base64_encode($row[7]);
                                     echo "' alt='error' class='img-thumbnail' style='width:50vh'/>";
                                     echo "						</div>";
                                     echo '					</div>';
@@ -135,7 +140,7 @@
             <a id="dl" style="display: none" href="<?php if (isset($fileName)) echo $fileName; ?>#" download>Download</a>
             <?php if (isset($fileName)) echo "<script>document.getElementById('dl').click();</script>"; ?>
             <!--匯出執行表單-->
-            <form method="post" action="search.php">
+            <form method="post" action="index.php?dest=CLIENT&page=info">
                 <input id="printTable" name="printTable" class="btn btn-default btn-info btn-block m-auto" style="display: none" type="submit" value="匯出">
             </form>
             <!--匯出按鈕-->

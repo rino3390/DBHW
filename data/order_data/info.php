@@ -28,7 +28,7 @@
                         <th scope="col" width=10%>供應商編號</th>
                         <th scope="col" width=5%></th>
                     </tr>
-                    <form name="search" class="form-horizontal" action="index.php?dest=CLIENT&page=info" method="post">
+                    <form name="search" class="form-horizontal" action="index.php?dest=ORDER&page=info" method="post">
                         <tr>
                             <th scope="col"><input name="clientID" class="form-control" type="text" maxlength="10" value="<?php if (isset($_POST['clientID'])) echo $_POST['clientID']; ?>"></th>
                             <th scope="col"><input name="orderDate" class="form-control" type="text" maxlength="10" value="<?php if (isset($_POST['orderDate'])) echo $_POST['orderDate']; ?>"></th>

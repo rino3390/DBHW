@@ -9,7 +9,7 @@ $sql = "SELECT COUNT(*) FROM `client` WHERE `clientID` LIKE '" . $_POST['ID'] . 
 if ($result = $connection->query($sql)) {
 	$row = $result->fetch_row();
 	if ($row[0] == 0) {
-		header('Location: index.php?dest=CLIENT&page=changeComplete');
+		echo "<script>alert('查無此用戶請重新輸入');</script>";
 	} else {
 		$sql = "SELECT * FROM `client` WHERE `clientID` LIKE '" . $_POST['ID'] . "'";
 		if ($result = $connection->query($sql)) {
@@ -61,14 +61,6 @@ if ($result = $connection->query($sql)) {
 			alert("職業不得為空");
 			return false;
 		}
-		if (document.getElementById("date").value.replace(/\s+/g, "") == "") {
-			alert("日期不得為空");
-			return false;
-		}
-		if (document.getElementById("userImage").value.replace(/\s+/g, "") == "") {
-			alert("照片不得為空");
-			return false;
-		}
 		return true;
 	}
 </script>
@@ -83,7 +75,7 @@ if ($result = $connection->query($sql)) {
 	<div class="row" style="height:3vh;"></div>
 	<div class="row">
 		<div class="col" style="padding:0px 5vw">
-			<form name="form" enctype="multipart/form-data" action="index.php?dest=CLIENT&page=add" method="post" onsubmit="if(check())return true; else return false;" onkeydown="if(event.keyCode==13){document.getElementById('add').click();return false;}">
+			<form name="form" enctype="multipart/form-data" action="index.php?dest=CLIENT&page=changeComplete" method="post" onsubmit="if(check())return true; else return false;" onkeydown="if(event.keyCode==13){document.getElementById('add').click();return false;}">
 				<table class="table table-bordered table-sm">
 					<tbody>
 						<tr>
@@ -99,7 +91,8 @@ if ($result = $connection->query($sql)) {
 								<h4>客戶身分證字號</h4>
 							</td>
 							<td>
-								<input id="ID" name="ID" class="form-control" type="text" maxlength="10" value="<?php echo $row[1] ?>">
+								<input id="newID" name="newID" class="form-control" type="text" maxlength="10" value="<?php echo $row[1] ?>">
+								<input id="ID" name="ID" class="form-control" type="text" maxlength="10" style="display:none" value="<?php echo $row[1] ?>">
 							</td>
 						</tr>
 						<tr>
@@ -155,8 +148,20 @@ if ($result = $connection->query($sql)) {
 							</td>
 						</tr>
 						<tr>
+							<td class="table-secondary">
+								<h4>消費狀態</h4>
+							</td>
+							<td>
+								<select id="status" name="status" class="form-control" value="<?php echo $row[8] ?>">
+									<option value="正常">正常</option>
+									<option value="停用">停用</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+						<tr>
 							<td colspan="2" class="text-center">
-								<input type="submit" id="submit" value="新增" style="width:100%;display:none;" class="btn btn-primary" />
+								<input type="submit" id="submit" value="修改" style="width:100%;display:none;" class="btn btn-primary" />
 								<!--新增按鈕-->
 								<button id="add" type="button" class="btn btn-default btn-info btn-block m-auto" style="width:65vw;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">新增</button>
 								<!--新增確認框-->
@@ -166,7 +171,7 @@ if ($result = $connection->query($sql)) {
 											<div class="modal-body">
 												<form>
 													<div class="form-group">
-														<label for="message-text" class="control-label">是否新增？</label>
+														<label for="message-text" class="control-label">是否修改？</label>
 													</div>
 												</form>
 												<button type="button" class="btn btn-default" data-dismiss="modal">返回</button>

@@ -2,6 +2,9 @@
     header("Location: index.php?failed=2");
 } ?>
 
+<!--匯出-->
+<?php if (isset($_POST['printTable'])) include("print.php") ?>
+
 <div class="main-content">
     <div class="row" style="height:3vh;"></div>
     <div class="row" style="height:10vh;">
@@ -23,7 +26,7 @@
                         <th scope="col" width=10%>待催收金額</th>
                         <th scope="col" width=5%></th>
                     </tr>
-                    <form name="search" class="form-horizontal" action="index.php?dest=CLIENT&page=info" method="post">
+                    <form name="search" class="form-horizontal" action="index.php?dest=ACCOUNT&page=info" method="post">
                         <tr>
                             <th scope="col"><input name="clientName" class="form-control" type="text" maxlength="10" value="<?php if (isset($_POST['clientName'])) echo $_POST['clientName']; ?>"></th>
                             <th scope="col"><input name="clientID" class="form-control" type="text" maxlength="10" value="<?php if (isset($_POST['clientID'])) echo $_POST['clientID']; ?>"></th>
@@ -43,8 +46,8 @@
                     include("./data/where_like.php");
                     // 儲存MySQL/MariaDB 指令
                     $sqlQuery = " FROM `collection_view`";
-                    $s = array("clientName", "clientID", "price", "recieveDate", "actualDate", "pay", "submit");
-                    for ($a = 0; $a < 7; $a++) {
+                    $s = array("clientName", "clientID", "price", "recieveDate", "actualDate", "pay");
+                    for ($a = 0; $a < 6; $a++) {
                         $sqlQuery = like($sqlQuery, $s[$a], " FROM `collection_view`");
                     }
                     $_SESSION['sqlQuery'] = $sqlQuery;
@@ -113,7 +116,6 @@
                                     echo '								</div>';
                                     echo '							</div>';
                                     echo '						</form>';
-                                    //echo '						<button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>';
                                     echo '					</div>';
                                     echo '				</div>';
                                     echo '			</div>';
@@ -142,7 +144,7 @@
             <a id="dl" style="display: none" href="<?php if (isset($fileName)) echo $fileName; ?>#" download>Download</a>
             <?php if (isset($fileName)) echo "<script>document.getElementById('dl').click();</script>"; ?>
             <!--匯出執行表單-->
-            <form method="post" action="search.php">
+            <form method="post" action="info.php">
                 <input id="printTable" name="printTable" class="btn btn-default btn-info btn-block m-auto" style="display: none" type="submit" value="匯出">
             </form>
             <!--匯出按鈕-->

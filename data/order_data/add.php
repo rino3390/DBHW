@@ -26,7 +26,15 @@ if (isset($_POST['id']) && isset($_POST['date'])) {
                 }
             }
         }
-        echo "<script>alert('新增成功');</script>";
+        $actual = date('Y-m-d',strtotime($_POST['date']."+3 day"));
+        //新增收帳款
+        $sql = "INSERT INTO `collection` (`clientID`, `orderID`, `recieveDate`) VALUES ('" . $_POST['id'] . "', '" . $last_id . "', '" . $actual . "')";
+        if ($connection->query($sql) === TRUE) {
+            echo "<script>alert('新增成功');</script>";
+        } else {
+            $sql = "DELETE FROM `order` WHERE `orderID`=.$last_id.";
+            echo "執行失敗：" . $connection->error;
+        }
     } else {
         echo "執行失敗：" . $connection->error;
     }

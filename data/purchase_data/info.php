@@ -28,7 +28,7 @@
                         <th scope="col" width=10%>進貨日期</th>
                         <th scope="col" width=5%></th>
                     </tr>
-                    <form name="search" class="form-horizontal" action="index.php?dest=CLIENT&page=info" method="post">
+                    <form name="search" class="form-horizontal" action="index.php?dest=PURCHASE&page=info" method="post">
                         <tr>
                             <th scope="col"><input name="supplierName" class="form-control" type="text" maxlength="10" value="<?php if (isset($_POST['supplierName'])) echo $_POST['supplierName']; ?>"></th>
                             <th scope="col"><input name="supplierID" class="form-control" type="text" maxlength="10" value="<?php if (isset($_POST['supplierID'])) echo $_POST['supplierID']; ?>"></th>

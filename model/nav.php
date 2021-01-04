@@ -36,7 +36,7 @@
 						</ul>
 					</li>
 					<li class="dropdown"><a href="index.php?dest=ACCOUNT&page=info">應收帳款</a></li>
-					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="index.php?dest=data&page=statistics">整合統計</a></li>
+					<li class="dropdown"><a href="index.php?dest=data&page=statistics">整合統計</a></li>
 					<ul class="nav navbar-nav navbar-right">
 						<?php if (login()) echo "<li><a data-toggle=\"tab\" href=\"#\"><a href=\"index.php?Logout=1\"><span class=\"glyphicon glyphicon-log-out\"></span>Log out</a></li>";
 						else echo "<li><a data-toggle=\"tab\" href=\"#\"><a href=\"index.php?page=login\"><span class=\"glyphicon glyphicon-log-in\"></span> Log in</a></li>";
