@@ -22,7 +22,6 @@
 							<!--訂貨資料-->
 							<li><a class="dropdown-item" href="index.php?dest=ORDER&page=info">查詢</a></li>
 							<li><a class="dropdown-item" href="index.php?dest=ORDER&page=add">新增</a></li>
-							<li><a class="dropdown-item" href="index.php?dest=ORDER&page=delete">刪除</a></li>
 							<li><a class="dropdown-item" href="index.php?dest=ORDER&page=statistics">統計</a></li>
 						</ul>
 					</li>
@@ -31,7 +30,6 @@
 							<!--進貨資料-->
 							<li><a class="dropdown-item" href="index.php?dest=PURCHASE&page=info">查詢</a></li>
 							<li><a class="dropdown-item" href="index.php?dest=PURCHASE&page=add">新增</a></li>
-							<li><a class="dropdown-item" href="index.php?dest=PURCHASE&page=delete">刪除</a></li>
 							<li><a class="dropdown-item" href="index.php?dest=PURCHASE&page=statistics">統計</a></li>
 						</ul>
 					</li>

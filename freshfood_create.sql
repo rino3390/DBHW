@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2021-01-04 09:12:13
+-- 產生時間： 2021-01-04 20:55:39
 -- 伺服器版本： 8.0.18
 -- PHP 版本： 7.4.12
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,16 +20,13 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `freshfood`
 --
-DROP DATABASE IF EXISTS `freshfood`;
 CREATE DATABASE IF NOT EXISTS `freshfood` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE freshfood;
+USE `freshfood`;
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `client`
---
--- 建立時間： 2020-12-26 11:09:56
 --
 
 DROP TABLE IF EXISTS `client`;
@@ -43,10 +41,6 @@ CREATE TABLE `client` (
   `pic` blob NOT NULL,
   `status` char(6) NOT NULL COMMENT '消費狀態'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='客戶資料';
-
---
--- 資料表的關聯 `client`:
---
 
 -- --------------------------------------------------------
 
@@ -92,8 +86,6 @@ CREATE TABLE `client_yearpay` (
 --
 -- 資料表結構 `collection`
 --
--- 建立時間： 2020-12-26 20:17:24
---
 
 DROP TABLE IF EXISTS `collection`;
 CREATE TABLE `collection` (
@@ -103,14 +95,6 @@ CREATE TABLE `collection` (
   `actualDate` date DEFAULT NULL COMMENT '實收日期',
   `actualPay` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '實收'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='收帳款';
-
---
--- 資料表的關聯 `collection`:
---   `clientID`
---       `client` -> `clientID`
---   `orderID`
---       `order` -> `orderID`
---
 
 -- --------------------------------------------------------
 
@@ -123,6 +107,7 @@ CREATE TABLE `collection_view` (
 `actualDate` date
 ,`clientID` char(10)
 ,`clientName` varchar(12)
+,`orderID` int(11)
 ,`pay` decimal(10,2)
 ,`price` decimal(10,2)
 ,`recieveDate` date
@@ -141,6 +126,7 @@ CREATE TABLE `oder_view` (
 ,`expectDate` date
 ,`num` decimal(10,2)
 ,`orderDate` date
+,`orderID` int(11)
 ,`price` decimal(10,2)
 ,`productName` varchar(16)
 ,`sum` decimal(10,2)
@@ -154,8 +140,6 @@ CREATE TABLE `oder_view` (
 --
 -- 資料表結構 `order`
 --
--- 建立時間： 2020-12-26 19:27:20
---
 
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
@@ -166,18 +150,10 @@ CREATE TABLE `order` (
   `actualDate` date DEFAULT NULL COMMENT '實際遞交日期'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='訂單資料';
 
---
--- 資料表的關聯 `order`:
---   `clientID`
---       `client` -> `clientID`
---
-
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `order_product`
---
--- 建立時間： 2020-12-26 19:10:33
 --
 
 DROP TABLE IF EXISTS `order_product`;
@@ -189,22 +165,10 @@ CREATE TABLE `order_product` (
   `supplierID` char(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='訂單含有的產品資料';
 
---
--- 資料表的關聯 `order_product`:
---   `orderID`
---       `order` -> `orderID`
---   `productID`
---       `product` -> `productID`
---   `supplierID`
---       `supplier` -> `supplierID`
---
-
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `product`
---
--- 建立時間： 2020-12-26 18:41:37
 --
 
 DROP TABLE IF EXISTS `product`;
@@ -213,10 +177,6 @@ CREATE TABLE `product` (
   `productName` varchar(16) NOT NULL,
   `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='產品資料';
-
---
--- 資料表的關聯 `product`:
---
 
 --
 -- 觸發器 `product`
@@ -235,8 +195,6 @@ DELIMITER ;
 --
 -- 資料表結構 `supplier`
 --
--- 建立時間： 2020-12-26 22:24:23
---
 
 DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE `supplier` (
@@ -244,10 +202,6 @@ CREATE TABLE `supplier` (
   `supplierName` varchar(16) NOT NULL COMMENT '供應商名稱',
   `principal` varchar(12) NOT NULL COMMENT '負責人名稱'
 ) ;
-
---
--- 資料表的關聯 `supplier`:
---
 
 --
 -- 觸發器 `supplier`
@@ -278,8 +232,6 @@ CREATE TABLE `supplier_daypay` (
 --
 -- 資料表結構 `supplier_product`
 --
--- 建立時間： 2020-12-28 03:18:25
---
 
 DROP TABLE IF EXISTS `supplier_product`;
 CREATE TABLE `supplier_product` (
@@ -294,14 +246,6 @@ CREATE TABLE `supplier_product` (
   `standard` varchar(16) NOT NULL COMMENT '規格',
   `purchaseDate` date NOT NULL COMMENT '進貨日期'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='供應商提供產品的資料';
-
---
--- 資料表的關聯 `supplier_product`:
---   `productID`
---       `product` -> `productID`
---   `supplierID`
---       `supplier` -> `supplierID`
---
 
 -- --------------------------------------------------------
 
@@ -343,11 +287,9 @@ CREATE TABLE `supplier_weekpay` (
 -- 檢視表結構 `client_monthpay`
 --
 DROP TABLE IF EXISTS `client_monthpay`;
--- 建立時間： 2020-12-26 23:08:07
---
 
 DROP VIEW IF EXISTS `client_monthpay`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `client_monthpay`  AS SELECT `oder_view`.`clientID` AS `clientID`, date_format(`oder_view`.`orderDate`,'%Y-%m') AS `months`, sum(`oder_view`.`sum`) AS `pay` FROM `oder_view` GROUP BY `oder_view`.`clientID`, `months` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `client_monthpay`  AS SELECT `oder_view`.`clientID` AS `clientID`, date_format(`oder_view`.`orderDate`,'%Y-%m') AS `months`, sum(`oder_view`.`sum`) AS `pay` FROM `oder_view` GROUP BY `oder_view`.`clientID`, `months` ;
 
 -- --------------------------------------------------------
 
@@ -355,11 +297,9 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 -- 檢視表結構 `client_weekpay`
 --
 DROP TABLE IF EXISTS `client_weekpay`;
--- 建立時間： 2020-12-26 23:08:50
---
 
 DROP VIEW IF EXISTS `client_weekpay`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `client_weekpay`  AS SELECT `oder_view`.`clientID` AS `clientID`, date_format(`oder_view`.`orderDate`,'%Y-%u') AS `weeks`, sum(`oder_view`.`sum`) AS `pay` FROM `oder_view` GROUP BY `oder_view`.`clientID`, `weeks` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `client_weekpay`  AS SELECT `oder_view`.`clientID` AS `clientID`, date_format(`oder_view`.`orderDate`,'%Y-%u') AS `weeks`, sum(`oder_view`.`sum`) AS `pay` FROM `oder_view` GROUP BY `oder_view`.`clientID`, `weeks` ;
 
 -- --------------------------------------------------------
 
@@ -367,11 +307,9 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 -- 檢視表結構 `client_yearpay`
 --
 DROP TABLE IF EXISTS `client_yearpay`;
--- 建立時間： 2020-12-26 23:04:20
---
 
 DROP VIEW IF EXISTS `client_yearpay`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `client_yearpay`  AS SELECT `oder_view`.`clientID` AS `clientID`, date_format(`oder_view`.`orderDate`,'%Y') AS `years`, sum(`oder_view`.`sum`) AS `pay` FROM `oder_view` GROUP BY `oder_view`.`clientID`, `years` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `client_yearpay`  AS SELECT `oder_view`.`clientID` AS `clientID`, date_format(`oder_view`.`orderDate`,'%Y') AS `years`, sum(`oder_view`.`sum`) AS `pay` FROM `oder_view` GROUP BY `oder_view`.`clientID`, `years` ;
 
 -- --------------------------------------------------------
 
@@ -379,11 +317,9 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 -- 檢視表結構 `collection_view`
 --
 DROP TABLE IF EXISTS `collection_view`;
--- 建立時間： 2020-12-26 21:16:53
---
 
 DROP VIEW IF EXISTS `collection_view`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `collection_view` (`clientName`, `clientID`, `price`, `recieveDate`, `actualDate`, `pay`) AS   select `client`.`clientName` AS `clientName`,`collection`.`clientID` AS `clientID`,`ord`.`sum` AS `price`,`collection`.`recieveDate` AS `recieveDate`,`collection`.`actualDate` AS `actualDate`,(case when ((now() > `collection`.`recieveDate`) and (`collection`.`actualDate` = ((0 - 0) - 0))) then `ord`.`sum` else 0 end) AS `pay` from ((`client` join `collection`) join (select `order_product`.`orderID` AS `orderID`,cast(sum((`product`.`price` * `order_product`.`number`)) as decimal(10,2)) AS `sum` from (`order_product` join `product`) where (`order_product`.`productID` = `product`.`productID`) group by `order_product`.`orderID`) `ord`) where ((`collection`.`orderID` = `ord`.`orderID`) and (`collection`.`clientID` = `client`.`clientID`))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `collection_view` (`clientName`, `clientID`, `price`, `recieveDate`, `actualDate`, `pay`, `orderID`) AS   select `client`.`clientName` AS `clientName`,`collection`.`clientID` AS `clientID`,`ord`.`sum` AS `price`,`collection`.`recieveDate` AS `recieveDate`,`collection`.`actualDate` AS `actualDate`,(case when ((now() > `collection`.`recieveDate`) and (`collection`.`actualDate` is null)) then `ord`.`sum` else 0 end) AS `pay`,`ord`.`orderID` AS `orderID` from ((`client` join `collection`) join (select `order_product`.`orderID` AS `orderID`,cast(sum((`product`.`price` * `order_product`.`number`)) as decimal(10,2)) AS `sum` from (`order_product` join `product`) where (`order_product`.`productID` = `product`.`productID`) group by `order_product`.`orderID`) `ord`) where ((`collection`.`orderID` = `ord`.`orderID`) and (`collection`.`clientID` = `client`.`clientID`))  ;
 
 -- --------------------------------------------------------
 
@@ -391,11 +327,9 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 -- 檢視表結構 `oder_view`
 --
 DROP TABLE IF EXISTS `oder_view`;
--- 建立時間： 2020-12-26 20:44:13
---
 
 DROP VIEW IF EXISTS `oder_view`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `oder_view` (`clientID`, `orderDate`, `expectDate`, `actualDate`, `productName`, `unit`, `num`, `price`, `sum`, `supplierName`, `supplierID`) AS   select `order`.`clientID` AS `clientID`,`order`.`orderDate` AS `orderDate`,`order`.`expectDate` AS `expectDate`,`order`.`actualDate` AS `actualDate`,`product`.`productName` AS `productName`,`order_product`.`unit` AS `unit`,`order_product`.`number` AS `number`,`product`.`price` AS `price`,cast((`product`.`price` * `order_product`.`number`) as decimal(10,2)) AS `sum`,`supplier`.`supplierName` AS `supplierName`,`order_product`.`supplierID` AS `supplierID` from (((`order` join `product`) join `order_product`) join `supplier`) where ((`product`.`productID` = `order_product`.`productID`) and (`order`.`orderID` = `order_product`.`orderID`) and (`supplier`.`supplierID` = `order_product`.`supplierID`))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `oder_view` (`clientID`, `orderDate`, `expectDate`, `actualDate`, `productName`, `unit`, `num`, `price`, `sum`, `supplierName`, `supplierID`, `orderID`) AS   select `order`.`clientID` AS `clientID`,`order`.`orderDate` AS `orderDate`,`order`.`expectDate` AS `expectDate`,`order`.`actualDate` AS `actualDate`,`product`.`productName` AS `productName`,`order_product`.`unit` AS `unit`,`order_product`.`number` AS `number`,`product`.`price` AS `price`,cast((`product`.`price` * `order_product`.`number`) as decimal(10,2)) AS `sum`,`supplier`.`supplierName` AS `supplierName`,`order_product`.`supplierID` AS `supplierID`,`order`.`orderID` AS `orderID` from (((`order` join `product`) join `order_product`) join `supplier`) where ((`product`.`productID` = `order_product`.`productID`) and (`order`.`orderID` = `order_product`.`orderID`) and (`supplier`.`supplierID` = `order_product`.`supplierID`))  ;
 
 -- --------------------------------------------------------
 
@@ -403,11 +337,9 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 -- 檢視表結構 `supplier_daypay`
 --
 DROP TABLE IF EXISTS `supplier_daypay`;
--- 建立時間： 2020-12-26 23:18:46
---
 
 DROP VIEW IF EXISTS `supplier_daypay`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `supplier_daypay`  AS SELECT `supplier_view`.`supplierID` AS `supplierID`, date_format(`supplier_view`.`purchaseDate`,'%Y-%m-%d') AS `day`, sum(`supplier_view`.`sum`) AS `pay` FROM `supplier_view` GROUP BY `supplier_view`.`supplierID`, `day` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `supplier_daypay`  AS SELECT `supplier_view`.`supplierID` AS `supplierID`, date_format(`supplier_view`.`purchaseDate`,'%Y-%m-%d') AS `day`, sum(`supplier_view`.`sum`) AS `pay` FROM `supplier_view` GROUP BY `supplier_view`.`supplierID`, `day` ;
 
 -- --------------------------------------------------------
 
@@ -415,11 +347,9 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 -- 檢視表結構 `supplier_view`
 --
 DROP TABLE IF EXISTS `supplier_view`;
--- 建立時間： 2020-12-26 19:52:21
---
 
 DROP VIEW IF EXISTS `supplier_view`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `supplier_view` (`supplierName`, `supplierID`, `principal`, `productName`, `num`, `unit`, `price`, `sum`, `location`, `standard`, `purchaseDate`) AS   select `supplier`.`supplierName` AS `supplierName`,`supplier_product`.`supplierID` AS `supplierID`,`supplier`.`principal` AS `principal`,`product`.`productName` AS `productName`,`supplier_product`.`number` AS `number`,`supplier_product`.`unit` AS `unit`,`supplier_product`.`price` AS `price`,`supplier_product`.`total` AS `total`,`supplier_product`.`location` AS `location`,`supplier_product`.`standard` AS `standard`,`supplier_product`.`purchaseDate` AS `purchaseDate` from ((`supplier_product` join `supplier`) join `product`) where ((`supplier_product`.`supplierID` = `supplier`.`supplierID`) and (`supplier_product`.`productID` = `product`.`productID`))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `supplier_view` (`supplierName`, `supplierID`, `principal`, `productName`, `num`, `unit`, `price`, `sum`, `location`, `standard`, `purchaseDate`) AS   select `supplier`.`supplierName` AS `supplierName`,`supplier_product`.`supplierID` AS `supplierID`,`supplier`.`principal` AS `principal`,`product`.`productName` AS `productName`,`supplier_product`.`number` AS `number`,`supplier_product`.`unit` AS `unit`,`supplier_product`.`price` AS `price`,`supplier_product`.`total` AS `total`,`supplier_product`.`location` AS `location`,`supplier_product`.`standard` AS `standard`,`supplier_product`.`purchaseDate` AS `purchaseDate` from ((`supplier_product` join `supplier`) join `product`) where ((`supplier_product`.`supplierID` = `supplier`.`supplierID`) and (`supplier_product`.`productID` = `product`.`productID`))  ;
 
 -- --------------------------------------------------------
 
@@ -427,11 +357,9 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 -- 檢視表結構 `supplier_weekpay`
 --
 DROP TABLE IF EXISTS `supplier_weekpay`;
--- 建立時間： 2020-12-26 23:15:38
---
 
 DROP VIEW IF EXISTS `supplier_weekpay`;
-CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `supplier_weekpay`  AS SELECT `supplier_view`.`supplierID` AS `supplierID`, date_format(`supplier_view`.`purchaseDate`,'%Y-%u') AS `weeks`, sum(`supplier_view`.`sum`) AS `pay` FROM `supplier_view` GROUP BY `supplier_view`.`supplierID`, `weeks` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `supplier_weekpay`  AS SELECT `supplier_view`.`supplierID` AS `supplierID`, date_format(`supplier_view`.`purchaseDate`,'%Y-%u') AS `weeks`, sum(`supplier_view`.`sum`) AS `pay` FROM `supplier_view` GROUP BY `supplier_view`.`supplierID`, `weeks` ;
 
 --
 -- 已傾印資料表的索引

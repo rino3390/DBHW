@@ -2,6 +2,9 @@
     header("Location: index.php?failed=2");
 } ?>
 
+<!--匯出-->
+<?php if (isset($_POST['printTable'])) include("data/purchase_data/print.php") ?>
+
 <div class="main-content">
     <div class="row" style="height:3vh;"></div>
     <div class="row" style="height:10vh;">
@@ -73,68 +76,6 @@
                                     for ($a = 0; $a < 10; $a++)
                                         echo "<td>" . $row[$a] . "</td>";
                                     echo "<td>" . date("Y/m/d", strtotime($row[10])) . "</td>";
-                                    echo '		<div class="modal fade" id="myModal' . $row[1] . '">';
-                                    echo '			<div class="modal-dialog modal-lg">';
-                                    echo '				<div class="modal-content">';
-                                    echo '					<div class="modal-header">';
-                                    echo '						<h3 class="modal-title">' . $row[0] . '<small> ' . $row[1] . '</small><small> (' . $row[5] . ')</small></h3>';
-                                    echo '						<button type="button" class="close" data-dismiss="modal">&times;</button>';
-                                    echo '					</div>';
-                                    echo '					<div class="modal-body row">';
-                                    echo '						<div class="col">';
-                                    echo '							<h5>職等：' . $row[2] . '</h5>';
-                                    echo '							<h5>薪資：' . $row[3] . '</h5>';
-                                    echo '							<h5>電話：' . $row[4] . '</h5>';
-                                    echo '							<h5>出生：' . date("Y/m/d", strtotime($row[6])) . '</h5>';
-                                    echo '							<h5>錄用：' . date("Y/m/d", strtotime($row[7])) . '</h5>';
-                                    echo '							<h5 style="display:inline-block">住址：</h5><h5 style="display:inline-block">' . $row[8] . '</h5>';
-                                    echo '						</div>';
-                                    echo "						<div class='col'>";
-                                    echo "							<img src='";
-                                    if ($row[7] != null) echo "data:image/png;base64, " . base64_encode($row[7]);
-                                    else echo $row[9];
-                                    echo "' alt='error' class='img-thumbnail' style='width:50vh'/>";
-                                    echo "						</div>";
-                                    echo '					</div>';
-                                    echo '					<div class="modal-footer">';
-                                    echo '						<form name="form" enctype="multipart/form-data" action="revise2.php" method="post">';
-                                    echo '							<input id="ID" name="ID" class="form-control" style="display:none" type="text" maxlength="10" value="' . $row[1] . '">';
-                                    echo '							<input type="submit" id="revise2submit" value="修改" class="btn btn-primary" />';
-                                    echo '						</form>';
-                                    echo '						<form name="form" enctype="multipart/form-data" action="delete.php" method="post">';
-                                    echo '							<input id="ID" name="ID" class="form-control" style="display:none" type="text" maxlength="10" value="' . $row[1] . '">';
-                                    echo '							<input type="submit" id="deletesubmit" value="查詢並進行刪除" style="width:100%;display:none;" class="btn btn-primary" />';
-                                    echo '							<!--查詢並進行刪除按鈕-->';
-                                    echo '							<button id="delete" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">刪除</button>';
-                                    echo '							<!--查詢並進行刪除確認框-->';
-                                    echo '							<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">';
-                                    echo '								<div class="modal-dialog" role="document">';
-                                    echo '									<div class="modal-content">';
-                                    echo '										<div class="modal-header">';
-                                    echo '											<h4 class="modal-title" id="exampleModalLabel">刪除</h4>';
-                                    echo '											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>';
-                                    echo '										</div>';
-                                    echo '										<div class="modal-body">';
-                                    echo '											<form>';
-                                    echo '												<div class="form-group">';
-                                    echo '													<label for="message-text" class="control-label">是否查詢並進行刪除？</label>';
-                                    echo '												</div>';
-                                    echo '											</form>';
-                                    echo '										</div>';
-                                    echo '										<div class="modal-footer">';
-                                    echo '											<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="document.getElementById(\'deletesubmit\').click();">確認</button>';
-                                    echo '											<button type="button" class="btn btn-default" data-dismiss="modal">返回</button>';
-                                    echo '										</div>';
-                                    echo '									</div>';
-                                    echo '								</div>';
-                                    echo '							</div>';
-                                    echo '						</form>';
-                                    //echo '						<button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>';
-                                    echo '					</div>';
-                                    echo '				</div>';
-                                    echo '			</div>';
-                                    echo '		</div>';
-                                    echo "	</tr>";
                                 }
                                 // 釋放資源
                                 $result->close();
@@ -158,7 +99,7 @@
             <a id="dl" style="display: none" href="<?php if (isset($fileName)) echo $fileName; ?>#" download>Download</a>
             <?php if (isset($fileName)) echo "<script>document.getElementById('dl').click();</script>"; ?>
             <!--匯出執行表單-->
-            <form method="post" action="search.php">
+            <form method="post" action="index.php?dest=PURCHASE&page=info">
                 <input id="printTable" name="printTable" class="btn btn-default btn-info btn-block m-auto" style="display: none" type="submit" value="匯出">
             </form>
             <!--匯出按鈕-->
